@@ -36,9 +36,9 @@ class isevenQueryParamRequestHandler(tornado.web.RequestHandler):
 if __name__ == "__main__":
     # Create an Application with handler URL mapping as a Tuple.
     app = tornado.web.Application([
-        (r"/", basicRequestHandler),
-        (r"/index", htmlListRequestHandler),
-        (r"/iseven", isevenQueryParamRequestHandler)
+        (r"/", basicRequestHandler), # http://localhost:8082/
+        (r"/index", htmlListRequestHandler), # http://localhost:8082/index
+        (r"/iseven", isevenQueryParamRequestHandler) # http://localhost:8082/iseven?number=1
     ])
     # Select a Port
     port = 8082
