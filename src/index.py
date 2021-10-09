@@ -1,7 +1,9 @@
 # Import Tornado Packages
+import re
 import tornado.web # This is used to create API Handlers
 import tornado.ioloop # This is used to keep the program running on the server continuously.
-
+import os # To check file and dir
+import json # To convert data into Json
 
 # Create Handler Class inhertiting Tornado RequestHandler module.
 class basicRequestHandler(tornado.web.RequestHandler):
@@ -37,6 +39,28 @@ class learnResourceParamRequestHandler(tornado.web.RequestHandler):
         # Print the details when GET executed.
         self.write(f"{studentName} is learning course with id {courseId}.")
 
+# Create Handler Class inhertiting Tornado RequestHandler module.
+class jsonReturnRequestHandler(tornado.web.RequestHandler):
+    # Create a GET method.
+    def get(self):
+        d_file = "E:\\Coder\\Python\\Projects\\devl\\learn_python_api\\src\\data.txt"
+        # First verify the file.
+        if os.path.isfile(d_file):
+            res = ""
+            # Read the content from file
+            with open(d_file, "r") as read_file:
+                res = str(read_file.read()).strip()
+                res = res.splitlines()
+            # Covert it to Json Array
+            if len(res) != 0:
+                res = json.dumps(res)
+                self.write(res)
+            else:
+                self.write(f"Error: File '{d_file}' is empty.")
+        else:
+            self.write(f"Error: '{d_file}' File not found.")
+
+
 
 # Create main method which should be the only one.
 if __name__ == "__main__":
@@ -45,7 +69,8 @@ if __name__ == "__main__":
         (r"/", basicRequestHandler), # http://localhost:8082/
         (r"/index", htmlListRequestHandler), # http://localhost:8082/index
         (r"/iseven", isevenQueryParamRequestHandler), # http://localhost:8082/iseven?number=1
-        (r"/learning/([A-z]+)/([0-9]+)", learnResourceParamRequestHandler) # http://localhost:8082/learning/Filo/101
+        (r"/learning/([A-z]+)/([0-9]+)", learnResourceParamRequestHandler), # http://localhost:8082/learning/Filo/101
+        (r"/jsondata", jsonReturnRequestHandler) # http://localhost:8082/jsondata
     ])
     # Select a Port
     port = 8082
