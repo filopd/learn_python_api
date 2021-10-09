@@ -30,6 +30,13 @@ class isevenQueryParamRequestHandler(tornado.web.RequestHandler):
         else:
             self.write(f"Error: {ip_1} is not a number.")
 
+# Create Handler Class inhertiting Tornado RequestHandler module.
+class learnResourceParamRequestHandler(tornado.web.RequestHandler):
+    # Create a GET method.
+    def get(self, studentName, courseId):
+        # Print the details when GET executed.
+        self.write(f"{studentName} is learning course with id {courseId}.")
+
 
 # Create main method which should be the only one.
 if __name__ == "__main__":
@@ -37,7 +44,8 @@ if __name__ == "__main__":
     app = tornado.web.Application([
         (r"/", basicRequestHandler), # http://localhost:8082/
         (r"/index", htmlListRequestHandler), # http://localhost:8082/index
-        (r"/iseven", isevenQueryParamRequestHandler) # http://localhost:8082/iseven?number=1
+        (r"/iseven", isevenQueryParamRequestHandler), # http://localhost:8082/iseven?number=1
+        (r"/learning/([A-z]+)/([0-9]+)", learnResourceParamRequestHandler) # http://localhost:8082/learning/Filo/101
     ])
     # Select a Port
     port = 8082
