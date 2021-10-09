@@ -31,7 +31,6 @@ class isevenQueryParamRequestHandler(tornado.web.RequestHandler):
             self.write(f"Error: {ip_1} is not a number.")
 
 
-
 # Create main method which should be the only one.
 if __name__ == "__main__":
     # Create an Application with handler URL mapping as a Tuple.
