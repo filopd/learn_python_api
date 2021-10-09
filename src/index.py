@@ -10,12 +10,20 @@ class basicRequestHandler(tornado.web.RequestHandler):
         # Print the details when GET executed.
         self.write("This is a Get Method Result from Server.")
 
+# Create Handler Class inhertiting Tornado RequestHandler module.
+class htmlListRequestHandler(tornado.web.RequestHandler):
+    # Create a GET method.
+    def get(self):
+        # Render index.html page created in the same directory.
+        self.render("index.htm")
+
 
 # Create main method which should be the only one.
 if __name__ == "__main__":
     # Create an Application with handler URL mapping as a Tuple.
     app = tornado.web.Application([
-        (r"/", basicRequestHandler)
+        (r"/", basicRequestHandler),
+        (r"/index", htmlListRequestHandler)
     ])
     # Select a Port
     port = 8082
