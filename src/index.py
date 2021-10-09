@@ -17,13 +17,28 @@ class htmlListRequestHandler(tornado.web.RequestHandler):
         # Render index.html page created in the same directory.
         self.render("index.htm")
 
+# Create Handler Class inhertiting Tornado RequestHandler module.
+class isevenQueryParamRequestHandler(tornado.web.RequestHandler):
+    # Create a GET method.
+    def get(self):
+        # take the input, verify it and return the result.
+        ip_1 = self.get_argument("number")
+        if ip_1.isdigit():
+            ip_1 = int(ip_1)
+            res = "even" if ip_1 % 2 == 0 else "odd"
+            self.write(f"Input number {ip_1} is {res}.")
+        else:
+            self.write(f"Error: {ip_1} is not a number.")
+
+
 
 # Create main method which should be the only one.
 if __name__ == "__main__":
     # Create an Application with handler URL mapping as a Tuple.
     app = tornado.web.Application([
         (r"/", basicRequestHandler),
-        (r"/index", htmlListRequestHandler)
+        (r"/index", htmlListRequestHandler),
+        (r"/iseven", isevenQueryParamRequestHandler)
     ])
     # Select a Port
     port = 8082
